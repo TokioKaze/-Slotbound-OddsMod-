@@ -1,0 +1,10 @@
+*.dat
+*.dat.orig
+*.dat.new
+*.log
+__pycache__/
+*.pyc
+build/
+dist/
+*.spec
+build_log.txt
