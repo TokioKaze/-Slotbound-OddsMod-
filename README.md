@@ -1,4 +1,91 @@
-# Slotbound 概率 Mod（转运军团 / Slotbound Odds Mod）
+# Slotbound Odds Mod / Slotbound 概率 Mod（转运军团）
+
+Author: **TokioKaze** · Mod version: **v1.3.1** · Supported game: **Slotbound v1.0.0(9)** (Steam edition)
+
+A local single-player mod for Slotbound. Customize **rarity probabilities** for slots and Fate Stones, adjust **class symbol probabilities**, and use an in-game utilities panel for gold, essence, spins, unlimited nudges, guaranteed Joker chains, and more.
+
+> This is an unofficial mod and is not affiliated with the game developer. Intended for single-player use, not online or leaderboard play. This repository **contains no game files**; the installer patches your own local game installation.
+
+## Features
+
+- **F8 — Probability panel** with three tabs. Rarity distributions total 100%; increasing one value proportionally reduces the others.
+  - Slot rarity: Common / Uncommon / Rare / Legendary / Prismatic.
+  - Fate Stone rarity, including quest rewards, shelves, and carried stones, with per-stone settings.
+  - Class symbols: Warrior / Archer / Spearman / Cavalry / Mage / Duelist, plus Joker (0–5%, capped by the game).
+  - Presets: Original / Hard / Medium / Easy / Roguelike Fun.
+- **F7 — Utilities panel**: edit and optionally lock gold, blue essence, remaining spins, and hearts; adjust extra nudges. Includes free spins, free rerolls, unlimited nudges, guaranteed Joker chains, unlimited unit health, a damage multiplier, and one-hit kills.
+- **Configuration**: `SlotboundOddsMod.ini` supports weight multipliers and target probabilities, with validation. Configuration comments are in Chinese.
+- **Logging**: `SlotboundOddsMod.log` records mod loading, configuration, and original versus modified probabilities.
+
+> A weight multiplier is not a final probability multiplier. For example, multiplying a Legendary slot weight of 0.4% by five gives approximately 1.97%, not 2%.
+
+The installer and in-game mod panels currently use Chinese. English documentation does not translate the interface. English names above are descriptive translations.
+
+## Testing status
+
+The current release is a standalone installer preview for Windows x64. Local packaged self-tests and GUI startup tests passed, as did a user test on another newer PC with development tools installed. GitHub Actions also builds and tests the packaged installer. Compatibility with older PCs without development tools remains unconfirmed; support for every older Windows version is not promised.
+
+## Installation — Windows, no Python required
+
+1. Download `SlotboundOddsMod_*.zip` from [Releases](https://github.com/TokioKaze/-Slotbound-OddsMod-/releases) and **extract the archive**.
+2. Close the game and run **`SlotboundOddsModSetup.exe`**. Windows may show a SmartScreen prompt for the unsigned installer.
+3. The installer attempts to locate the Steam game folder. If necessary, click **Browse (浏览…)** and select the folder containing `Slotbound.exe`.
+4. Click **Install / Update (安装 / 更新)**. The installer validates the files and backs up the original as `Slotbound.dat.orig`.
+5. Launch the game through Steam. No separate tool needs to stay running. Press **F8** or **F7** to open the panels.
+
+The installer also offers **Restore Original (恢复原版)** and **Check Installation Status (检查安装状态)**.
+
+<details><summary>Install from source / Build the installer</summary>
+
+- Source installation requires Python 3: run `pip install cryptography`, then
+  `python slotbound_odds_patcher.py "D:\SteamLibrary\steamapps\common\Slotbound"`.
+  Use `--restore` to restore the original or `--status` to check installation status. Alternatively, place the repository files in the game folder and run `Install.bat`.
+- On Windows, run `Build.bat` to create the single-file executable at `dist/SlotboundOddsModSetup.exe`.
+- GitHub Actions builds, tests, and publishes a preview release when `RELEASE_VERSION` changes on `main`, a matching `v*` tag is pushed, or the workflow is run manually. Tags must match `RELEASE_VERSION`.
+
+</details>
+
+## Uninstall / Restore the original
+
+- Close the game and click **Restore Original** in the installer; or
+- In Steam, right-click Slotbound → Properties → Installed Files → **Verify integrity of game files**.
+
+## After game updates
+
+Steam updates may replace patched files. Check mod compatibility before reinstalling; a newer game version may require an updated mod. Do not manually restore an old backup over a newer game installation.
+
+## How it works
+
+The game uses LÖVE 11.5 and LuaJIT, with code stored in an encrypted `Slotbound.dat`. The patcher decrypts this file locally, replaces `src/game/luck.lua` with a small loader that runs the mod and the original module, updates the game's integrity hash chain, and re-encrypts and verifies the package. The mod wraps the game's probability tables and functions. See [docs/UserGuide.md](docs/UserGuide.md) for details (Chinese).
+
+## Repository files
+
+| File | Purpose |
+|---|---|
+| `SlotboundOddsMod.lua` | Mod implementation |
+| `slotbound_odds_patcher.py` | Decryption, patching, encryption, verification, backup and restore; command-line interface |
+| `SlotboundOddsModInstaller.py` | GUI installer, packaged as `SlotboundOddsModSetup.exe` |
+| `SlotboundOddsMod.ini` | Example configuration with Chinese comments |
+| `Build.bat` / `.github/workflows/release.yml` | Local and CI installer builds |
+| `Install.bat` / `RestoreOriginal.bat` | Source-based installation and restoration; Python required |
+| `README_FIRST_ZH.txt` / `README_FIRST_EN.txt` | Chinese and English quick-start guides included in releases |
+| `docs/UserGuide.md` | Detailed mechanics, configuration, scope, and validation notes |
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+[MIT](LICENSE) © 2026 TokioKaze
+
+## Installation guides
+
+[English](README_FIRST_EN.txt) · [中文](README_FIRST_ZH.txt)
+
+Different file modification dates are normal. This repository contains one complete source version; use Git commits and release tags to identify versions.
+
+========
 
 作者：**TokioKaze** · 当前版本 **v1.3.1** · 适配游戏 **Slotbound v1.0.0(9)**（Steam 版）
 
